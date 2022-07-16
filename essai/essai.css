@@ -1,0 +1,263 @@
+﻿p:nth-child(2n+1) { color:navy; } /*(2n+1) peut aussi se remplacer par (odd) signifiant impair, ligne impaire en l'occurence */
+p:nth-child(2n) {color:green; } /*de même, (2n) peut se remplacer par (even)*/
+h2:nth-child(4) {color:green; }
+
+#logo h1
+{
+	font-family:"Learning Curve Pro", "Learning Curve Pro Regular";
+	font-weight:bold;
+	font-size:4em;
+	position: absolute;
+	top: 25px;
+	left: 110px;
+}
+
+#logo img
+{
+	position: absolute;
+	top: 30px;
+	left: 40px;
+}
+
+#titre-principal h2
+{
+	position: absolute;
+	top: 90px;
+	left: 40px;
+}
+
+header
+{
+	height:150px;
+	padding-left: 40px;
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	background:url("trait.png") repeat-x bottom;
+	margin-bottom: 20px;
+}
+
+nav
+{
+	margin-right: 40px;
+	text-align:right;	
+}
+nav a
+{
+	margin:0 0 0 35px;
+	text-decoration:none;
+	color:black;
+	font-size:200%;
+}
+
+nav a:hover
+{
+	border-bottom:5px solid maroon;
+	color:maroon;
+}
+
+body
+{
+	background:url("fond.png") repeat scroll;
+	padding:0px;
+}
+
+#banniere_image
+{
+	border:1px solid yellow;
+	border-radius:5px;
+	background:url("fond_article1.jpg") no-repeat top;
+	height:288px;
+	width: 1250px;
+	margin: auto;
+}
+
+.retour
+{
+	background-color:rgba(0,0,0,0.5);
+	color:white;
+	padding:12px 5px;
+	max-height:50px;
+	min-height:30px;
+	width: 1238px;
+	position: relative;
+	top: 234px;
+}
+.lien_article
+{
+	position: absolute;
+	right : 10px;
+	text-decoration:none;
+	border:1px solid red;
+	border-radius:5px;
+	background-color:red;
+	color:white;
+	padding:5px;
+	
+}
+
+section
+{	
+	display: flex;
+	margin-top: 10px;
+	padding:0 40px;
+}
+.prish
+{
+	float:left;
+}
+.titre2
+{
+	font-size:2em;
+	margin:0;
+}
+article
+{
+	width:74%;
+	margin-right: 15px;
+}
+.p1
+{
+	clear:both;
+}
+
+section h1,h2
+{
+	font-family:"Latin Modern Roman 10","Latin Modern Roman", "LatinModernRoman";
+}
+
+aside
+{
+	color: white;
+	width:22%;
+	background-color:gray;
+	margin: 0 0 20px 5px;
+	padding:10px;
+	border-radius:5px;
+	height: 50%;
+	text-align: center;
+}
+
+aside h2
+{
+	margin:0;
+	font-size:130%;
+}
+
+.avi
+{
+	text-align: center;
+}
+
+.avi img
+{
+	border:2px solid black
+}
+.logos img
+{
+	margin-right: 10px;
+}
+footer
+{
+	background:url("traitbas.png") repeat-x top;
+	height:100px;
+	max-height:130px;
+	padding:25px 40px 0 40px;
+}
+
+p
+{
+	text-align:justify;
+}
+.table
+{
+	width:100%;
+	overflow:auto;
+}
+
+table img, div, ul
+{
+	margin:0 10px 50px 0;
+}
+.table td
+{
+	width:33.33%
+	padding:0 0 40px 0;
+}
+table h2
+{
+	margin:0;
+}
+
+.itable
+{
+	color:maroon;
+}
+
+@media screen and (max-width: 1250px)
+{
+	#banniere_image
+	{
+		display: none;
+	}
+}
+
+@media screen and (max-width: 800px)
+{
+	section
+	{
+		flex-direction: column;
+	}
+	
+	aside
+	{
+		width: auto;
+		height: auto;
+	}
+	
+	.avi img
+	{
+		float: right;
+		margin-left: 10px;
+	}
+	
+	nav p
+	{
+		display: flex;
+		flex-direction: column;
+	}
+	
+	article
+	{
+		width: auto;
+		margin: auto;
+	}
+	
+	nav a
+	{
+		font-size: 160%;
+	}
+	
+	.table
+	{
+		width: auto;
+	}
+	
+	table img, div, ul
+	{
+		margin: 2px;
+	}
+	
+	.table td
+	{
+		padding: auto;
+	}
+	
+	aside p:last-child
+	{
+		text-align: center;
+	}
+	
+}
+
+

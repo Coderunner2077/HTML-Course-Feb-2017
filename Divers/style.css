@@ -1,0 +1,23 @@
+/*Pour enlever les puces d'une liste à puces : */
+ul
+{
+	list-style-type: none;
+}
+
+/* Pour transformer les puces en images */
+ul
+{
+	list-style-image: url('img.png');
+}
+
+/*Pour transformer le texte en majuscules :*/
+h1
+{
+	text-transform: uppercase;
+}
+
+/*Et l'inverse :*/
+p
+{
+	text-transform: lowercase;
+}

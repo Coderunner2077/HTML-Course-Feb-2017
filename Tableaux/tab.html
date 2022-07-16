@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="style.css" />
+		<title>Tableaux</title>
+	</head>
+	<body>
+	<p class="un deux trois">Mon ami casse-toi</p>
+	<table>
+		<caption>Passagers du vol 340 </caption>
+		<thead><!--pour les grands tableaux -->
+			<tr>
+				<th>Nom</th>
+				<th>Age</th>
+				<th>Pays</th>
+			</tr>
+		</thead>
+		<tfoot><!-- à mettre avant le tbody ("c'est conseillé") -->
+			<tr>
+				<th>Nom</th>
+				<th>Age</th>
+				<th>Pays</th>
+			</tr>
+		</tfoot>
+		<tbody>
+			<tr>
+				<td>Dubois</td>
+				<td>Freddy</td>
+				<td>France</td>
+			</tr>
+			<tr>
+				<td>Kurtz</td>
+				<td>Babouin</td>
+				<td>Mongolie</td>
+			</tr>
+		</tbody>
+	</table>
+		
+		<table id="table2">
+			<caption>Deuxieme tableau</caption>
+			<tr>
+				<th>Titre du film</th>
+				<th>Pour enfants ?</th>
+				<th>Pour adolescents ?</th>
+			</tr>
+			<tr>
+				<td>Massacre a la tronconneuse</td>
+				<td>Non, trop violent</td>
+				<td>Oui</td>
+			</tr>
+			<tr>
+				<td>Les bisounours font du ski</td>
+				<td rowspan="2">Oui</td>
+				<td rowspan="2">Non, pas assez violent</td>
+			</tr>
+			<tr>
+				<td>Telepouziki</td>
+			</tr>
+			<tr>
+				<td>Lucky Luke, seul contre tous</td>
+				<td colspan="2">Pour toute la famille</td>
+			</tr>
+		</table>
+	</body>
+</html>

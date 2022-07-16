@@ -1,0 +1,210 @@
+<!--									Le responsive design avec les Media Queries
+
+La première préoccupation des webmasters qui mettent en place le design de leur site est la résolution d'écran
+de leurs visiteurs. Eh oui : selon les cas, il y a plus ou moins de place, plus ou moins de pixels de largeur.
+
+Cette information est importante lorsqu'on construit un design : comment un site doit-il s'adapter aux différentes
+résolutions d'écran ? 
+
+C'est là que les media queries entrent en jeu. Ce sont les règles à appliquer pour changer le design du site
+en fonction des caractéristiques de l'écran. Grâce à cette technique, on peut créer un design qui s'adapte
+automatiquement à l'écran de chaque visiteur ! 
+
+I./ Mise en place des media queries
+
+Les media queries font partie des nouveautés du CSS3. Il ne s'agit pas de nouvelles propriétés mais de règles
+que l'on peut appliquer dans certaines conditions. Concrètement, je vais pouvoir dire "Si la résolution de
+l'écran du visiteur est inférieure à tant, alors applique les propriétés CSS suivantes". Cela permet de changer
+l'apparence du site dans certaines conditions : on pourrait augmenter la taille du texte, changer la couleur 
+de fond, positionner différemment le menu dans certaines résolutions, etc.
+
+Contrairement à ce qu'on pourrait penser, les media queries ne concernent pas que les résolutions d'écrans.
+On peut changer l'apparence de son site en fonction d'autres critères comme le type d'écran (smartphone, 
+téléviseur, projecteur...), le nombre de couleurs, l'orientation de l'écran (portrait ou paysage), etc. Les
+possibilités sont très nombreuses !
+
+1.) Appliquer une media query
+
+Les media query sont donc des règles qui indiquent quand on doit appliquer des propriétés CSS. Il y a deux 
+façons de les utiliser :
+
+	-	En chargeant une feuille de style .css différente en fonction de la règle (ex: "Si la résolution est
+			inférieure à 1280px, charge le fichier petite_resolution.css)
+	-	En écrivant la règle directement dans le fichier .css habituel (ex:"Si la résolution est inférieure
+			à 1280px, charge les propriétés ci-dessous
+
+2.) Chargement d'une feuille de style différente
+
+Revoyons la balise <link rel="stylesheet" href="style.css" /> à présent.
+
+On peut lui ajouter un attribut media dans lequel on va écrire la règle qui doit s'appliquer pour que le 
+fichier soit chargé. On dit qu'on fait une "requête de media" (media query en anglais). 
+Voici un exemple :
+
+<link rel="stylesheet" media="screen and (max-width: 1280px)" href="petite_resolution.css" />
+
+Au final, mon code CSS pourrait proposer plusieurs fichiers CSS : un par défaut (qui est chargé dans tous les
+cas) et un ou deux autres qui seront chargés en supplément uniquement si la règle correspondante s'applique.
+
+Exemple :
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="style.css" /> /*Pour tout le monde */
+		<link rel="stylesheet" media="screen and (max-width: 1280px)" href="petite_resolution.css" />
+		<title>Titre</title>
+	</head>
+	...
+
+3.) Chargement des règles directement dans la feuille de style 
+
+Une autre technique, consiste à écrire ces règles dans le même fichier CSS que d'habitude.
+Dans ce cas, on écrit la règle dans le fichier .css comme ceci :
+
+@media screen and (max-width: 1280px)
+{
+	/*propriétés CSS... */
+}
+
+II./ Les règles disponibles
+
+1.) Les règles 
+
+Il existe de nombreuses règles permettant de construire des media queries. Voici les principales :
+
+	-	color : gestion de la couleur (en bits/pixel)
+	-	height : hauteur de la zone d'affichage (fenêtre)
+	-	width : largeur de la zone d'affichage (fenêtre)
+	-	device-height : hauteur du périphérique
+	-	device-width : largeur du périphérique
+	-	orientation : orientation du périphérique (portrait ou paysage)
+	-	media : type d'écran de sortie. Quelques unes des valeurs possibles :
+			*	screen : écran "classique"
+			*	handheld : périphérique mobile
+			*	print : impression
+			*	tv : télévision
+			*	projection : projecteur
+			*	all : tous les types d'écran
+	
+Note : On peut rajouter le préfixe min- ou max- devant la plupart de ces règles. 
+La différence entre width et device-width se perçoit surtout sur les navigateurs mobiles des smartphones (cf
+plus loin).
+
+Les règles peuvent être combinés à l'aide des mots suivants :
+
+	-	only : "uniquement"
+	-	and : "et"
+	-	not : "non"
+
+Voici quelques exemple de media queries :
+/* Sur les écrans, quand la largeur de la fenêtre fait au maximum 1280px */
+@media sreen and (max-width: 1280px)
+
+/* Sur tous les types d'écran, quand la largeur de la fenêtre est comprise entre 1024px et 1280px */
+@media all and (min-width: 1024px) and (max-width: 1280px)
+
+/* Sur les téléviseurs */
+@media tv
+
+/* Sur tout type d'écrans orientés verticalement */
+@media all and (orientation: portrait)
+
+2.) Tester les media queries
+
+Les media queries sont surtout utilisées pour adapter le design du site aux différentes largeurs d'écran.
+
+Faisons un test tout simple : je vais changer la couleur et la taille du texte si la fenêtre fait plus ou moins
+de 1024px de large. Pour ce test, je vais utiliser la seconde méthode qui consiste à écrire la règle directement
+dans le même fichier .css que d'habitude : 
+
+Réf style.css
+
+III./ Mise en pratique des media queries sur le design
+
+Réf essai
+
+auto est la valeur par défaut de la propriété width. Par défaut, les blocs ont une largeur automatique (ils
+prennent toute la place disponible). En affectant cette valeur dans le cadre d'une media query à la largeur 
+d'un bloc, on "écrase" la largeur précédente de celui-ci. C'est ce que j'ai fait pour la largeur du bloc
+article.
+
+Ou encore, afin de cacher un bloc, on fait ==>
+#bloc
+{
+	display: none;
+}
+
+C'est ainsi que j'ai fait pour faire disparaître la bannière (image avec le pont de San-Francisco). 
+
+IV./ Media queries et navigateurs mobiles 
+
+Les écrans des smartphones sont beaucoup moins larges que les écrans habituels, mais les navigateurs mobiles
+semblent ne pas tout à fait être au courant. Mais bon, pour s'adapter quand même, les navigateurs mobiles
+affichent le site en "dézoomant", ce qui permet d'avoir un aperçu de l'ensemble de la page. La zone d'affichage
+simulée est appelée le viewport: c'est la largeur de la fenêtre du navigateur sur le mobile.
+
+En CSS, avec les media queries, si je cible l'écran avec max-width, celui-ci va comparer la largeur que j'indique
+avec son viewport. Le problème, c'est que le viewport change selon le navigateur mobile utilisé !
+
+Voici les largeurs du viewport selon le navigateur :
+
+NAVIGATEUR				LARGEUR DU VIEWPORT PAR DEFAUT
+------------------------------------------------------
+Opera Mobile			850px
+iPhone Safari			980px
+Android					800px
+Windows Phone			1024px
+
+
+En fait, les navigateurs mobiles simulent une largeur d'écran : et on appelle cette largeur simulée le viewport.
+Donc, un iPhone par exemple, se comporte comme si la fenêtre faisait 980px de large, tandis qu'un Android se
+comporte comme si la fenêtre faisait 800px. 
+
+Pour cibler les smartphones, plutôt que d'utiliser max-width, il peut être plus intéressant de recourir
+à maw-device-width : c'est la largeur du périphérique. Les périphériques mobiles ne dépassant pas 480px de large
+on pourra viser uniquement les navigateurs mobiles avec cette media query :
+
+@media all and (max-device-width: 480px)
+{
+	/*mes règles CSS ici */
+}
+
+Pourquoi ne pas cibler les mobiles avec la règle media handheld ?
+
+En théorie, on peut le faire. Mais en pratique, aucun navigateur mobile à part Opera Mobile ne reconnaît
+handheld. Ils se comportent tous comme s'ils étaient des écrans normaux (screen). On ne peut donc pas vraiment
+utiliser handheld pour viser les mobiles. 
+
+On peut modifier la largeur viewport du navigateur mobile avec une balise meta à insérer dans l'en-tête (<head>)
+du document :
+
+<meta name="viewport" content="width=480" />
+
+Je peux également utiliser cette balise pour modifier la façon dont le contenu de ma page s'organise sur les
+mobiles. Pour obtenir un rendu facile à lire, sans zoom, on peut demander à ce que le viewport soit le même
+que la largeur de l'écran :
+
+<meta name="viewport" content="width=device-width" />
+
+-->
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="style.css" />
+		<title>Le responsive design avec les Media Queries</title>
+	</head>
+	<body>	
+		<p>
+			Les media queries sont surtout utilisées pour adapter le design du site aux différentes largeurs d'écran.
+			<br />
+			Faisons un test tout simple : nous allons changer la couleur et la taille du texte si la fenêtre fait 
+			<br />
+			plus ou moins de 1024 pixels de large. Pour ce test, je vais utiliser la seconde méthode qui consiste
+			<br />
+			à écrire la règle directement dans le même fichier .css que d'habitude :
+		</p>
+	</body>
+</html>

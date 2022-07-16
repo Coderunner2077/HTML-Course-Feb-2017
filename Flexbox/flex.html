@@ -1,0 +1,230 @@
+<!-- 									La mise en page avec Flexbox
+Il existe une façon de mettre en page un site, bien meilleure que celle consistant à utiliser float ou même 
+inline-block. C'est celle qui consiste à recourir au Flexbox. En effet, cette technique-là permet toutes les
+folies. Flexbox est désormais reconnu par tous les navigateurs. 
+
+I./ Un conteneur, des éléments
+
+La technique de mise en page est assez simple : on définit un conteneur, et à l'intérieur, on définit plusieurs
+éléments. Ce conteneur n'est ni plus ni moins qu'une balise HTML, et les éléments sont d'autres balises HTML.
+Ex :
+<div id="conteneur">
+	<div class="element">Element1</div>
+	<div class="element">Element2</div>
+	<div class="element">Element3</div>
+</div>
+
+Rien qu'en appliquant la propriété suivante au conteneur, les trois blocs (div class="element") vont se situer 
+côte à côte de façon horizontale :
+#conteneur
+{
+	display: flex;
+}
+
+On voit mieux l'effet en assignant une taille et une couleur de fond aux trois éléments.
+
+II./ Soyons flex
+
+1.) La direction
+
+Flexbox permet d'agencer ces éléments dans le sens que l'on veut. Avec flex-direction, on peut les positionner
+verticalement on encore les inverser. Cette propriété peut prendre les valeurs suivantes :
+
+	-	row : organisées sur une ligne (par défaut)
+	-	column : organisées sur une colonne
+	-	row-reverse : organisées sur une ligne, mais en ordre inversé
+	-	column-reverse : organisées sur une colonne, mais en ordre inversé
+	
+Exemple :
+
+#conteneur
+{
+	display: flex;
+	flex-direction: column;
+}
+
+Mais ce n'est pas tout, puisque maintenant que mes éléments sont flex, ils ont tout un tas d'autres propriétés
+utiles que je vais voir par la suite.
+
+2.) Le retour à la ligne
+
+Par défaut, les blocs essaient de rester sur la même ligne même s'ils n'ont pas la place (ce qui peut provoquer
+des bugs de design parfois). Si je le souhaite, je peux demander à ce que les blocs aillent à la ligne lorsqu'ils
+n'ont plus la place. Pour cela, j'utilise la propriété flex-wrap qui peut prendre ces valeurs :
+	-	nowrap : pas de retour à la ligne (par défaut)
+	-	wrap : les éléments vont à la ligne lorsqu'il n'y a plus la place
+	-	wrap-reverse : les éléments vont à la ligne lorsqu'il n'y a plus la place, mais en sens inverse
+	
+III./ Alignons-les
+
+Les éléments sont organisés soit horizontalement (par défaut), soit verticalement. Cela définit ce qu'on appelle
+l'axe principal. Il y a aussi un axe secondaire (cross axis) :
+	*	Si mes éléments sont organisés horizontalement, l'axe secondaire est l'axe vertical
+	*	Si mes éléments sont organisés verticalement, l'axe secondaire est l'axe horizontal
+
+Tout ça pour dire que je vais maintenant découvrir comment aligner mes éléments sur l'axe principal ET sur 
+l'axe secondaire. 
+
+1.) Aligner sur l'axe principal
+
+Pour faire simple, partons sur des éléments organisés horizontalement (c'est le cas par défaut).
+Pour changer leur alignement, on va utiliser justify-content, qui peut prendre ces valeurs :
+	-	flex-start : alignés au début (par défaut)
+	-	flex-end : alignés à la fin
+	-	center : alignés au centre
+	-	space-between : les éléments sont étirés sur tout l'axe (il y a de l'espace entre eux)
+	-	space-around : les éléments sont étirés sur tout l'axe, mais ils laissent aussi de l'espace sur les 
+						extrêmités
+
+Par exemple :
+#conteneur
+{
+	display: flex;
+	justify-content: space-around;
+}
+
+Donc, avec une simple propriété, on peut agencer les éléments comme on veut.
+
+Ce qu'il faut noter, c'est que cela marche aussi si mes éléments sont dans une direction verticale. Dans ce
+cas, l'axe vertical devient l'axe principal. 
+
+2.) Aligner sur l'axe secondaire
+
+Si mes éléments sont placés dans une direction horizontale, alors l'axe secondaire est l'axe vertical. Et 
+inversement.
+
+Avec align-items, on peut changer leur alignement sur l'axe secondaire. Il peut prendre ces valeurs :
+	-	stretch : les éléments sont étirés sur tout l'axe (valeur par défaut) (/!\)
+	-	flex-start : alignés au début
+	-	flex-end : alignés à la fin
+	-	center : alignés au centre
+	-	baseline : alignés sur la ligne de base (semblable à flex-start)
+	
+Pour ces exemples, on va partir du principe que nos éléments sont dans une direction horizontale :
+#conteneur
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+Note : St Graal du développeur web, le centrage vertical et horizontal peut d'ailleurs être obtenu encore
+plus facilement ==> en déclarant le conteneur en tant que flex, et en établissant des marges automatiques 
+sur les éléments à l'intérieur (ie margin: auto). C'est tout ! 
+==>
+#conteneur
+{
+	display: flex;
+	height: 800px; /*sinon, ça ne marche pas comme on le souhaite*/
+}
+
+.element
+{
+	margin: auto;
+}
+
+3.) Aligner un seul élément
+
+Il est possible de faire une exception pour un seul des éléments sur l'axe secondaire avec l'align-self :
+#conteneur
+{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.element:nth-child(2) /*on prend le 2nd bloc par exemple */
+{
+	background-color: blue;
+	align-self: flex-end; /*seul ce bloc sera aligné à la fin*/
+}
+
+IV./ Répartir plusieurs lignes
+
+Si j'ai plusieurs lignes dans mon FLexbox, je peux choisir comment celles-ci seront réparties, avec :
+==> align-content;
+
+Note : cette propriété n'a aucun effet s'il n'y a qu'une seule ligne dans la Flexbox.
+
+Prenons donc un cas de figure où on a plusieurs lignes. Je vais donc rajouter des lignes :
+<div id="conteneur">
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+    <div class="element"></div>
+</div>
+
+Avec align-content, on peut modifier l'espace séparant les lignes (ou colonnes) formées par les éléments.
+Voici les valeurs que peut prendre align-content (propriété appliquée au conteneur) :
+	-	flex-start : les éléments seront placés au début (sans aucune espace entre les lignes ou colonnes)
+	-	flex-end : les éléments seront placés à la fin
+	-	center : les éléments seront placés au centre
+	-	space-between : les lignes (ou colonnes) d'éléments seront séparés par de l'espace entre eux
+	-	space-around : idem, mais il y a aussi de l'espace au début et à la fin
+	-	stretch : les éléments s'étirent pour occuper tout l'espace
+
+V./ Rappel à l'ordre
+
+Sans changer le code HTML, on peut modifier l'ordre des éléments en CSS grâce à la propriété order appliquée
+aux éléments eux-mêmes. On indique simplement un nombre, et les éléments seront triés du plus petit au plus
+grand.
+Réf style.css
+
+VI./ Encore plus flex : faire grossir ou retrécir les éléments
+
+Avec la propriété flex (appliquée aux éléments), on peut permettre à un élément de grossir pour occuper
+tout l'espace restant.
+Ex:
+.element:nth-child(2)
+{
+	flex: 1;
+}
+
+Les éléments ayant une plus grande valeur flex auront une taille plus grande.
+
+Note : la propriété flex est en fait une super-propriété qui combine flex-grow (capacité à grossir), flex-shrink
+(capacité à maigrir) et flex-basis (taille par défaut). 
+
+
+-->
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="style.css" />
+		<title>Flexbox</title>
+	</head>
+	<body>
+		<!--
+		<div id="conteneur">
+			<div class="element">Element1</div>
+			<div class="element">Element2</div>
+			<div class="element">Element3</div>
+		</div>
+		-->
+		<div id="conteneur">
+			<div class="element"></div>
+			<div class="element"></div>
+			<div class="element"></div>
+			<div class="element"></div>
+			<div class="element"></div>
+			<div class="element"></div>
+			<div class="element"></div>
+			<div class="element"></div>
+			<div class="element"></div>
+			<div class="element"></div>
+			<div class="element"></div>
+			<div class="element"></div>
+		</div>
+	</body>
+</html>

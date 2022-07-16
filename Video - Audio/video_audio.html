@@ -1,0 +1,221 @@
+<!--										La vidéo et l'audio
+
+Aucune balise HTML ne permettait jusqu'ici de gérer la vidéo. Il fallait à la place utiliser un plugin, comme
+Flash. Celui-ci reste encore en partie utilisé pour regarder des vidéos sur Youtube, Dailymotion, Vimeo et 
+ailleurs. Mais utiliser un plug-in a de nombreux défauts : on dépend de ceux qui gèrent le plugin (en l'occurence,
+l'entreprise Adobe, qui possède Flash), et on ne peut pas toujours contrôler son fonctionnement, il y a parfois
+des failles de sécurité... Au final, c'est assez lourd.
+
+C'est pour cela que deux nouvelles balises ont été créées en HTML5 : <video> et <audio> !
+
+I./ Les formats audio et vidéo
+
+Le fonctionnement des vidéo est tellement complexe qu'on pourrait faire un cours entier à ce sujet. Etant 
+donné qu'on parle ici de HTML, on va alléger considérablement. C'est donc une approche simplifiée ici.
+
+1.) Les formats audio 
+
+La plupart des formats sont compressés, ce qui permet de réduire leur poids. Voici les principaux formats audio :
+
+	-	MP3 : le format le plus vieux et le plus compatible, ce qui fait qu'il est toujours très utilisé aujd'hui
+	-	AAC : majoritairement utilisé par Apple sur iTunes, c'est un format de bonne qualité. Les iPods &Co 
+				savent le lire sans problème
+	-	OGG : le format Ogg Vorbis est très répandu dans le monde du logiciel libre, notamment sous Linux. Ce
+				format a l'avantage d'être libre (ie il n'est protégé par aucun brevet)
+	-	WAV : format non-compressé. Il est recommandé d'éviter de l'utiliser car très volumineux. C'est un
+				peu un équivalent de BitMap pour audio
+				
+La compatibilité dépend des navigateurs, mais elle évolue dans le bon sens au fil du temps. Un site pour
+vérifier la compatibilité : caniuse.com
+
+2.) Les formats vidéo
+
+Le stockage de la vidéo est autrement plus complexe. On a besoin de trois éléments :
+
+	-	Un format conteneur : c'est un peu comme une boîte qui va contenir les deux éléments ci-dessous. On 
+		reconnaît en général le type de conteneur à l'extension du fichier : AVI, MP4, MKV...
+	-	Un codec audio : c'est le format du son de la vidéo, généralement compressé. Je viens de les voir...
+	-	Un codec vidéo : c'est le format qui va compresser les images. C'est là que les choses se corsent, car	
+			ces formats sont complexes et on ne peut pas toujours les utiliser gratuitement. Les principaux à
+			connaître pour le Web sont :
+				*	H.264 : l'un des plus puissants et les plus utilisés aujourd'hui... mais il n'est pas 100%
+						gratuit. En fait, on peut l'utiliser gratuitement dans certains cas (comme la diffusion
+						de vidéos sur un site web personnel), mais il y a un flou juridique qui fait qu'il est
+						risqué de l'utiliser à tout va
+				*	Ogg Theora : un codec gratuit et libre de droits, mais moins puissant que H.264. Il est bien
+						reconnu sous Linux, mais sous Windows, il faut installer des programmes pour pouvoir le
+						lire.
+				*	WebM : un autre codec gratuit et libre de droits, plus récent. Proposé par Google, c'est 
+						le concurrent le plus sérieux de H.264 à l'heure actuelle. 
+
+Là encore, il faut surveiller la compatibilité (par exemple sur le site caniuse.com)... Le format H.264 semble
+sortir du lot. Il est quand même conseillé si possible de proposer chaque vidéo dans plusieurs formats pour 
+qu'elle soit lisible sur un maximum de navigateurs. 
+
+Un logiciel simple et gratuit pour la conversion de vidéos : Miro Video Converter 
+
+II./ Insertion d'un élément audio
+
+En théorie, il suffit d'une simple balise pour jouer un son sur une page :
+
+<audio src="musique.mp3"></audio>
+
+En pratique, c'est un peu plus compliqué que cela. 
+
+Si je teste ce code... je n'y verrai que du feu ! En effet, le navigateur va seulement télécharger les 
+informations générales sur le fichier (on parle de métadonnées), mais il ne se passera rien de particulier.
+
+Je peux compléter la balise des attributs suivants : 
+
+	-	controls : pour ajouter les boutons "Lecture", "Pause" et la barre de défilement. Cela peut sembler
+			indispensable, et on pourrait se demander pourquoi cela n'y figure pas par défaut, mais certains
+			sites web préfèrent créer eux-mêmes leurs propres boutons et commander la lecture avec JavaScript.
+	-	width : pour modifier la largeur de l'outil de lecture audio
+	-	loop : la musique sera jouée en boucle.
+	-	autoplay : la musique sera jouée dès le chargement de la page. Il ne faut pas en abuser, car c'est assez
+			désagréable d'arriver sur un site qui joue de la musique tout seul !
+	-	preload : indique si la musique peut être préchargée dès le chargement de la page ou non. Cet attribut
+			peut prendre les valeurs :
+				*	auto (par défaut) : le navigateur décide s'il doit précharger toute la musique, uniquement
+						les métadonnées ou rien du tout.
+				*	metadata : charge uniquement les métadonnées (durée, etc.)
+				*	none : pas de préchargement. Utile si je ne veux pas gaspiller de bande passante sur mon site
+	
+Note : on ne peut pas forcer le préchargement, c'est toujours le navigateur qui décide. Les navigateurs mobiles,
+par exemple, ne préchargent jamais la musique pour économiser la bande passante (le temps de chargement étant 
+long sur un mobile).
+
+Ajoutons les contrôles et ce sera déjà mieux :
+
+<audio src="musique.mp3" controls></audio>
+
+L'apparence du lecteur audio change en fonction du navigateur. 
+
+Pourquoi ouvrir la balise pour la fermer juste après ?
+
+Cela me permet d'afficher un message ou de proposer une solution de secours pour les navigateurs qui ne gèrent pas
+cette nouvelle balise. Par exemple :
+
+<audio src="musique.mp3" controls>Votre navigateur date.</audio>
+
+Ceux qui ont un navigateur récent ne verront pas le message. En revanche, les anciens navigateurs, qui ne 
+comprennent pas la balise, afficheront le texte qui se trouve à l'intérieur.
+
+Et si le navigateur ne gère pas le format MP3 en l'occurence, que faire ?
+
+Il faut proposer plusieurs versions du fichier audio. Dans ce cas, on va construire notre balise comme ceci :
+<audio controls>
+	<source src="musique.mp3>
+	<source src="musique.ogg">
+</audio>
+
+Le navigateur prendra automatiquement le format qu'il reconnaît. 
+
+III./ Insertion vidéo
+
+Il suffit d'une simple balise <video> pour insérer une vidéo dans la page :
+
+<video src="titre_video.webm"></video>
+
+Là encore, je risque d'être déçu car il n'y aura aucun contrôle pour lancer la vidéo.
+
+Rajoutons quelques attributs (la plupart sont les mêmes que pour <audio>) :
+
+	-	poster : image à afficher à la place de la vidéo tant que celle-ci n'est pas lancée. Par défaut, le
+			navigateur prend la 1re image de la vidéo mais, comme il s'agit souvent d'une image noire ou d'une
+			image peu représantative de la vidéo, il est conséillé d'en créer une ! 
+	-	controls : pour ajouter les boutons "Lecture", "Pause" et la barre de défilement. Cela peut sembler
+			indispensable, mais certains sites web préfèrent gérer eux-mêmes leurs propres boutons et commander
+			la lecture avec JavaScript. 
+	-	width : pour modifier la largeur de la vidéo
+	-	height : pour modifier la hauteur de la vidéo
+	-	loop : la vidéo sera jouée en boucle
+	-	autoplay : la vidéo sera jouée dès le chargement de la page. Là encore, il faut éviter d'en abuser, car
+			c'est irritant d'arriver sur un site qui lance quelque chose tout seul.
+	-	preload : indique si la vidéo peut être préchargée dès le chargement de la page ou non. Cet attribut
+			peut prendre les valeurs suivantes : 
+				*	auto (par défaut) : le navigateur décide s'il doit précharger la vidéo, uniquement les
+						métadonnées ou rien du tout.
+				*	metadata : charge uniquement les métadonnées (durée, dimensions, etc.)
+				*	none : pas de préchargement. Utile si on veut éviter de gaspiller la bande passante de son site
+	
+Note : Pareil que pour l'audio, on ne peut pas forcer le préchargement
+
+Note2 : Les proportions de la vidéo sont toujours conservées. Si on définit une largeur et une hauteur, le 
+navigateur fera en sorte de ne pas dépasser les dimensions indiquées tout en conservant les proportions.
+
+Voici un code un peu plus complet :
+
+<video src="title-video.webm" controls poster="image.jpg" width="600"></video>
+
+Pourquoi ouvrir et refermer juste après la balise ?
+
+La réponse est la même que pour la balise <audio>. Cela me permet d'afficher un message ou d'utiliser une
+technique de secours (en Flash) si le navigateur ne reconnaît pas la balise :
+<video src="video.webm" controls poster="image.jpg" width="600">Votre navigateur date.</video>
+
+Comment contenter tous les navigateurs, puisque chacun reconnaît des formats vidéo différents ?
+
+==> J'utilise des balises <source> à l'intérieur de la balise <video> pour proposer différents formats. Le
+navigateur prendra celui qu'il reconnaît :
+<video controls poster="image.jpg" width="600">
+	<source src="sintel.mp4">
+	<source src="sintel.webm">
+	<source src="sintel.ogv">
+</video>
+
+Attention : Les iPhone, iPad et iPod ne reconnaissent pour l'instant  que le format H.264 (fichier .mp4)... et
+uniquement si celui-ci apparaît en premier dans la liste ! Il est donc fortement recommandé d'indiquer le format
+H.264 en premier pour assurer une compatibilité maximale.
+
+Comment afficher la vidéo en plein écran ?
+
+==> Ce n'est pas toujours possible. En fait, il existe bien un moyen sur Firefox mais il est un peu
+caché : il faut faire un clic droit sur la vidéo, puis sélectionner "Plein écran".
+
+Il n'y a pas moyen de forcer le plein écran, même en JavaScript. Cela peut se comprendre, car des sites 
+pourraient perturber fortement la navigation des visiteurs en affichant des vidéo en plein écran sans leur
+demander leur accord.
+
+Comment protéger une vidéo afin que l'on ne puisse pas la copier facilement ?
+
+==> Ce n'est pas possible. Les balises n'ont pas été conçues pour limiter ou empêcher le téléchargement. 
+C'est assez logique quand on y pense : pour que le visiteur puisse voir la vidéo, il faut bien de toute façon
+qu'il la télécharge d'une manière ou d'une autre !
+
+Il ne faut donc pas espérer empêcher le téléchargement d'une vidéo avec cette technique.
+
+Note : les lecteurs vidéo Flash permettent de "protéger" le contenu des vidéos mais, là encore, des solutions
+de contournement existent. De nombreux plug-ins permettent de télécharger les vidéos, de Youtube par exemple.
+
+Remarque : il est important de spécifier au moins la largeur pour la vidéo, sinon la vidéo s'affichera
+avec sa taille réelle (qui peut prendre toute la page !).
+
+-->
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="style.css" />
+		<title>Audio et Vidéo</title>
+	</head>
+	<body>	
+		<p>
+			<audio src="wish_you_were_here.mp3" controls width="400" preload="metadata" autoplay loop>
+			Votre navigateur date !</audio>
+			<br />
+			<video src="Clock.mp4" controls poster="img.jpg" width="500" height="600" preload="metadata" loop>
+			Votre navigateur date !</video>
+			<audio controls width="400" preload="none" autoplay loop>
+				<source src="wish_you_were_here.mp3">
+				<source src="wish_you_were_here.ogg">
+			</audio>
+			<video controls poster="img.jpg" preload="none" autoplay loop width="600" height="500">
+				<source src="Clock.mp4">
+				<source src="Clock.webm">
+				<source src="Clock.ogv">
+			</video>
+		</p>
+	</body>
+</html>

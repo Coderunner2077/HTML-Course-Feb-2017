@@ -1,0 +1,125 @@
+/*
+#conteneur
+{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: flex-start;
+	align-items: center;
+	height: 800px; /* un peu de hauteur pour que les éléments aient de la place pour bouger 
+}
+
+/*
+.element
+{
+	margin: auto;
+}
+*/
+/*
+.element:nth-child(1)
+{
+	width: 200px;
+	height: 200px;
+	background-color: red;
+	color: red;
+}
+
+.element:nth-child(2)
+{
+	width: 200px;
+	height: 200px;
+	background-color: green;
+	color: green;
+	align-self: flex-end;
+}
+
+.element:nth-child(3)
+{
+	width: 200px;
+	height: 200px;
+	background-color: yellow;
+	color: yellow;
+}
+
+*/
+/*Partie IV.*/
+
+#conteneur
+{
+	display: flex;
+	flex-wrap: wrap;
+	align-content: space-between;
+	height: 800px;
+	background-color: rgba(0, 0, 0, 0.08);
+}
+
+.element
+{
+	min-width: 200px;
+	min-height: 200px;
+	flex: 1;
+}
+.element:nth-child(1)
+{
+	background-color: green;
+	order: 4;
+	flex: 3;
+}
+.element:nth-child(2)
+{
+	background-color: red;
+	order: 3;
+}
+.element:nth-child(3)
+{
+	background-color: yellow;
+	order: 6;
+	flex: 2;
+}
+.element:nth-child(4)
+{
+	background-color: white;
+	order: 2;
+}
+.element:nth-child(5)
+{
+	background-color: black;
+	order: 5;
+}
+.element:nth-child(6)
+{
+	background-color: blue;
+	order: 1;
+}
+.element:nth-child(7)
+{
+	background-color: gray;
+	order: 7;
+	flex: 4;
+}
+.element:nth-child(8)
+{
+	background-color: lime;
+	order: 8;
+}
+.element:nth-child(9)
+{
+	background-color: maroon;
+	order: 10;
+}
+.element:nth-child(10)
+{
+	background-color: red;
+	order: 9;
+}
+.element:nth-child(11)
+{
+	background-color: fuchsia;
+	order: 12;
+}
+.element:nth-child(12)
+{
+	background-color: blue;
+	order: 11;
+}
+

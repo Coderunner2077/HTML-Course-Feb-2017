@@ -1,0 +1,24 @@
+table
+{
+	border-collapse: collapse; /*avec separate (par défaut), les bordures auraient été dissociées */
+}
+
+th, td
+{
+	border: 1px solid black;
+	text-align: center;
+	vertical-align: center;
+}
+#table2 caption
+{
+	caption-side: bottom;/* top(par défaut) aurait situé le titre du tableau en haut*/
+}
+body
+{
+	display: flex;
+	justify-content: space-around;
+}
+.un, .deux, .trois
+{
+	background-color: green;
+}

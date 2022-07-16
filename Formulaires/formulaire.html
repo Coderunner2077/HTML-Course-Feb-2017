@@ -1,0 +1,529 @@
+<!--										Les formulaires
+
+J'arrive aux limites du HTML, car ce dernier ne permet pas l'analyse des informations que le visiteur a saisies.
+Le traitement des résultats se fait dans un autre langage, par exemple le PHP.
+
+En attendant, je vais découvrir un grand nombre de nouvelles balises HTML autour des formulaires, que ce soit
+des boutons, les cases à cocher, les champs de saisie ou encore les listes déroulantes.
+
+I./ Créer un formulaire
+
+Pour insérer un formulaire, il faut commencer par écrire la balise suivante :
+<form></form>
+
+C'est la balise principale du formulaire, elle permet d'en indiquer le début, et la fin.
+
+Note : il faut obligatoirement mettre des balises de type block (comme <p></p>) à l'intérieur de cette balise
+si je souhaite y faire figurer tu texte.
+
+Sur un site, lorsqu'un visiteur tape un message, disons sur un forum, il faut que ce message puisse être envoyé
+à celui qui gère le site, et enfin l'afficher pour que les autres visiteurs le voient.
+
+Eh bien, c'est là que les ennuis commencent :
+
+	* PROBLEME N°1: Comment envoyer le texte saisi par le visiteur ? Par quel moyen ?
+	* PROBLEME N°2: Une fois que les données ont été envoyées, comment les traiter ? Est-ce que je souhaite 
+					recevoir le message automatiquement par mail ou bien je préfère qu'un programme se	
+					charge de l'enregistrer quelque part, puis de l'afficher sur une page visible par tout le 
+					monde ?
+
+Pour fournir les réponses à ces deux problèmes, je dois ajouter deux attributs à la balise <form> :	
+
+	*	method : cet attribut indique par quel moyen les données vont être envoyées (réponse au PB N°1). Il 
+		existe deux solutions pour envoyer des données sur le Web :
+			-	method="get" : c'est une méthode en général assez peu adaptée car elle est limitée à 255
+				caractères. La particularité vient du fait que les informations sont envoyées dans l'adresse de
+				la page (http://...), mais ce détail ne va pas m'intéresser pour le moment. La plupart du temps,
+				il est recommandé d'utiliser l'autre méthode =>"post"
+			-	method="post" : c'est la méthode la plus utilisée pour les formulaires car elle permet d'envoyer
+				un grand nombre d'informations. Les données saisies dans le formulaire ne transitent pas
+				par la barre de l'adresse.
+				
+	*	action : c'est l'adresse de la page ou du programme qui va traiter les informations (réponse au PB N°2).
+			Cette page se chargera de m'envoyer un e-mail avec le message si c'est ce que je veux, ou bien 
+			d'enregistrer le message avec tous les autres dans une base de données.
+			Et cela ne peut pas se faire en HTML et CSS, on utilisera peut-être un autre langage comme le PHP.
+			
+On va donc maintenant compléter la balise <form> avec les deux attributs qu'on vient de voir. Réf <body>
+Donc, pour method, je mets "post" et pour action, je tape pour le moment le nom d'une page fictive en PHP 
+(page, sensée être appelée lorsque le visiteur cliquera sur le bouton d'envoi du formulaire).
+
+II./ Les zones de saisie basiques
+
+Bien. Il faut savoir qu'il y a deux zones de textes différentes :
+
+	-	La zone de texte monoligne : comme son nom l'indique, on ne peut y écrire qu'une seule ligne.
+			Elle sert à saisir des textes courts, par exemple un pseudo.
+	-	La zone de texte multiligne : Cette zone de texte permet d'écrire une quantité très importante de texte 
+			sur plusieurs lignes.
+
+1.) Zone de texte monoligne
+					
+Pour insérer une zone de texte dans une ligne, on va utiliser la balse <input />.
+Note : On trouvera cette balise plusieurs fois dans la suite de ce chapitre. A chaque fois, c'est la valeur
+de son attribut type qui va changer.
+
+Pour créer une zone de texte, on procède comme suit :
+
+<input type="text" />
+
+Ce n'est pas encore suffisant, il faut également donner un nom à ma zone de texte. Ce nom n'apparaît pas sur
+la page, mais il me sera indispensable par la suite. En effet, cela me permettra (en PHP, par exemple) de 
+reconnaître d'où viennent les info : je saurai que tel texte est le pseudo du visiteur, tel texte est le mot
+de passe qu'il a choisi, etc.
+
+Pour donner un nom à un élément de formulaire, on utilise l'attribut name. Ici, on va supposer qu'on demande
+au visiteur de taper son pseudo :
+
+<input type="text" name="pseudo" />
+
+Note : il faudra mettre cette balise dans un bloc, comme <p></p>
+
+2.) Les libellés
+				
+Les libellés indiquent au visiteur ce qu'il doit écrire dans une zone de texte. Voici comment procéder
+pour écrire un libellé et une zone de texte :
+<form method="post" action="traitement.php">
+	<p>
+		<label>Votre pseudo</label> : <input type="text" name="pseudo" />
+	</p>
+</form>
+
+Mais cela ne suffit pas, il faut lier le libellé à la zone de texte. 
+Pour ce faire, on doit donner un nom à la zone de texte, non pas avec l'attribut name, mais avec l'attribut
+id (que l'on peut utiliser sur toutes les balises).
+
+Est-ce qu'un nom et un id sur le même champ ne va pas faire double emploi ? Si, un peu. Mais c'est pas grave.
+On peut même donner la même valeur au name et à l'id, cela ne pose pas de problème.
+
+Pour lier le label à la zone de texte, il faut lui donner un attribut for qui a la même valeur que l'id du
+champ. Ainsi :
+<form method="post" action="traitement.php">
+	<p>
+		<label for="pseudo">Votre pseudo</label> : <input type="text" name="pseudo" id="pseudo" />
+	</p>
+</form>
+
+Note : lorsqu'on clique sur le label, le curseur se place automatiquement dans la zone de texte 
+correspondante.
+
+3.) Quelques attributs supplémentaires
+
+On peut ajouter un certain nombre d'autres attributs à la balise <input /> pour personnaliser son 
+fonctionnement :
+
+	-	size : pour agrandir le champ avec 
+	-	maxlength : pour limiter le nombre de caractères maximal que l'on peut saisir 
+	-	value : pour pré-remplir le champ avec une valeur par défaut
+	-	placeholder : pour donner une indication sur le contenu du champ. Cette indication disparaîtra dès
+			que l'on commence à taper du texte
+
+Ex :
+<form method="post" action="traitement.php">
+	<p>
+		<label for="pseudo">Votre pseudo : </label>
+		<input type="text" name="pseudo" id="pseudo" size="30" maxlength="10" placeholder="Ex: Baran" />
+	</p>
+</form>
+
+4.) Zone de mot de passe
+
+On peut facilement faire en sorte que la zone de texte se comporte comme une "zone de mot de passe", i.e.
+comme une zone où on ne voit pas à l'écran les caractères saisis. Pour créer une telle zone de texte,
+il suffit d'utiliser l'attribut : 
+
+type="password"
+
+Réf body
+		
+5.) Zone de texte multiligne
+
+Pour créer une zone de texte multiligne, on change de balise : je vais utiliser <textarea></textarea>.
+
+Comme pour tout autre élément du formulaire, il lui faut donner un nom avec name et utiliser un label qui
+explique de quoi il s'agit :
+
+<form method="post" action="traitement.php">
+	<p>
+		<label for="disserte">D'où vient le mal ?</label>
+		<br />
+		<textarea name="disserte" id="disserte">Des hommes. Essentiellement.</textarea>
+	</p>
+</form>
+
+On peut modifier la taille de <textarea> de deux façons différentes :	
+					
+	-	En CSS : il suffit d'appliquer les propriétés CSS width et height au <textarea>
+	-	Avec des attributs : en ajoutant les attributs rows et cols à la balise textarea.
+
+On peut également pré-remplir le <textarea> avec une valeur par défaut. Dans ce cas, on n'utilise pas l'attribut
+value : on écrit tout simplement le texte par défaut entre la balise ouvrante et la balise fermante.
+
+II./ Les zones de texte enrichies
+
+HTML5 apporte de nombreuses fonctionnalités relatives aux formulaires. De nouveaux types de champs sont en effet
+apparus avec cette version. Il suffit de donner à l'attribut type de la balise <input /> l'une des valeurs
+disponibles. Faisons un petit tour d'horizon !
+
+Note : Tous les navigateurs ne connaissent pas encore ces zones de texte enrichies. A leur place, les anciennes
+versions de navigateurs afficheront une simple zone de saisie monoligne (comme si on avait écrit type="text").
+Mais en fait, c'est parfait : les nouveaux navigateurs pouvant profiter des  dernières fonctionnalités, tandis
+que les anciennes versions de navigateurs affichant une zone de texte de remplacement qui convient tout aussi
+bien. 
+J'ai donc tout intérêt à utiliser ces nouvelles zones de saisies ! Au mieux, mes visiteurs profiteront des 
+nouvelles fonctionnalités, au pire, il ne verront aucun problème.
+
+1.) E-mail
+
+Je peux demander à saisir une adresse e-mail ainsi :
+<input type="email" />
+
+Le champ me semblera à priori identique à une zone de texte monoligne normale, mais le navigateur saura que le
+visiteur doit rentrer une adresse e-mail. Il peut même parfois afficher une indication si l'adresse n'est pas 
+un e-mail. 
+D'ailleurs, certains navigateurs, comme les navigateurs mobiles sur iPhone et Android, iront même jusqu'à 
+afficher un clavier adapté à la saisie d'e-mail. 
+
+2.) Une url
+
+Avec le type "url", on peut demander à saisir une adresse absolue (commençant généralement par http://) :
+
+<input type="url" />
+
+Cas similaire à celui du type="email"
+					
+3.) Numéro de téléphone
+
+Ce champ est dédié à la saisie de numéros de téléphone :
+
+<input type="tel" />
+
+Sur iPhone, un clavier adapté s'affichera lorsqu'on doit remplir le champ.
+
+4.) Nombre
+
+Ce champ permet de saisir un nombre entier :
+
+<input type="number" />
+
+Le champ s'affichera en général avec des petites flèches pour changer la valeur.
+
+Je peux personnaliser le fonctionnement du champ avec les attributs suivants :
+
+	-	min : valeur minimale autorisée
+	-	max : valeur maximale autorisée
+	-	step : C'est le "pas" de déplacement. Si j'indique un pas de 2, le champ n'acceptera que des valeurs
+			de 2 en 2 (par exemple 0, 2, 4, 6...)
+
+5.) Un curseur
+
+Le type range permet de sélectionner un nombre avec un curseur (aussi appelé slider) :
+<input type="range" />
+
+Je peux là aussi utiliser les attributs min, max et step pour restreindre les valeurs disponibles. 
+
+6) Couleur
+
+Ce champ permet de saisir une couleur :
+
+<input type="color" />
+
+Attention, tous les navigateurs ne connaissent pas encore ce type de champ, mais la compatibilité progresse.
+
+7.) Date
+
+Différents types de champs de sélection de date existent :
+
+	-	date : pour la date (12/08/1990 par exemple)
+	-	time : pour l'heure (13:34 par ex)
+	-	week : pour la semaine
+	-	month : pour le mois
+	-	datetime : pour la date et l'heure (avec gestion du décalage horaire)
+	-	datetime-local : pour la date et l'heure (sans gestion du décalage horaire)
+
+Exemple :
+<input type="date" />
+
+Ces types de champ ne sont pas encore complètement reconnu sur tous les navigateurs
+					
+8.) Recherche
+
+On peut créer un champ de recherche comme ceci :
+
+<input type="search" />
+
+Le navigateur décide ensuite comment afficher le champ de recherche. Ainsi, il peut ajouter une petite
+loupe au champ pour signifier que c'est un champ de recherche et éventuellement mémoriser les dernières 
+recherches effectuées par le visiteur.
+
+III./ Les éléments d'options
+
+HTML m'offre une ribambelle d'éléments d'options à utiliser dans mon formulaire. Ce sont des éléments qui
+demandent au visiteur de faire un choix parmi une liste de possibilités.
+Je vais passer en revue :
+	-	les cases à cocher
+	-	les zones d'options
+	-	les listes déroulantes
+	
+1.) Les cases à cocher
+
+Créer une case à cocher ? Rien de plus simple :
+
+<input type="checkbox" name="choix" />
+
+Je rajoute bien sûr un label bien placé et le tour est joué.
+Réf body
+
+Il ne faudra pas oublier de donner un nom différent à chaque case à cocher, cela permettra d'identifier plus
+tard quelles cases ont été cochées par le visiteur.
+
+Enfin, je peux aussi faire en sorte qu'une case soit cochée par défaut, grâce à l'attribut checked :
+
+<input type="checkbox" name="choix" id="choix" checked />
+
+Note : Normalement, tout attribut possède une valeur. Dans le cas présent, en revanche, ajouter une valeur
+n'est pas obligatoire : la présence de l'attribut suffit à faire comprendre à l'ordi que la case doit être 
+cochée. 
+Si cela me perturbe, je peux donner n'importe quelle valeur à l'attribut checked (certains webmasters écrivent
+parfois checked="checked" mais c'est peu un redondant !). Dans tous les cas, la case sera cochée.
+
+2.) Les zones d'options
+
+Les zones d'options me permettent de faire un choix, et un seul, parmi une liste de possibilités. 
+Elles ressemblent un peu aux cases à cocher, mais il y a une petite difficulté supplémentaire : elles doivent
+être organisées en groupes. Les options d'un même groupe possèdent le même nom (name), mais chaque option doit
+avoir une valeur (value) différente. 
+
+La balise à utiliser est toujours <input />, avec cette fois la valeur radio pour l'attribut type.
+
+Réf body
+
+Pourquoi avoir mis le même nom pour chaque option ? Tout simplement pour que le navigateur sache de quel 
+"groupe" le bouton fait partie. 
+Si on enlève les attributs name, il devient possible de sélectionner tous les boutons. Or ce n'est pas ce 
+que l'on veut. C'est pour cela qu'on les lie entre eux en leur donnant un nom identique.
+
+Note : on a choisi un id différent de name. En effet, les valeurs de name étant identiques, on n'aurait pas
+pu différencier les id (ceux-ci devant en plus être uniques). D'où le choix de donner à l'id la même valeur 
+que value.
+
+Attention : ne pas oublier l'attribut value ! D'ailleurs, ce value n'est pas là pour donner une valeur par 
+défaut, il permet juste d'identifier l'option choisie lors du traitement dans le PHP.		
+					
+Si j'ai deux zones d'options, il faudra donner un name unique à chaque groupe. 
+
+Note : l'attribut checked peut là aussi être utilisé.
+
+3.) Les listes déroulantes 
+
+Les listes déroulantes sont un autre moyen élégant de faire un choix parmi plusieurs possibilités. Le 
+fonctionnement est un peu différent. On va utiliser la balise <select></select> qui indique le début et la
+fin de la liste déroulante. On ajoute l'attribut name à la balise pour donner un nom à la liste.
+
+Puis, à l'intérieur du <select></select>, je vais placer plusieurs balises <option></option> (une par 
+choix possible). On ajoute à chacune d'elles un attribut value pour pouvoir identifier ce que le visiteur
+a choisi.
+
+Exemple :
+
+<form method="post" action="traitement.php">
+	<p>
+		<label for="pays">Dans quel pays habitez-vous ? </label><br />
+		<select name="pays" id="pays">
+			<option value="france">France</option>
+			<option value="spain">Espagne</option>
+			<option value="germany">Allemagne</option>
+		</select>
+	</p>
+</form>
+			
+Si je veux qu'une option soit sélectionnée par défaut, je dois utiliser l'attribut selected	:
+
+<option value="australie" selected>Australie</option>
+
+Je peux aussi grouper mes options avec la balise <optgroup></optgroup>. On peut, par exemple, séparer
+les pays en fonction du continent
+
+Note : les groupes ne peuvent pas être sélectionnées. Ainsi, dans mon exemple, on ne peut pas choisir
+l'Europe. Seuls les noms des pays sont disponibles dans la sélection.
+
+Note : dans la balise <optgroup></optgroup>, on ajoute un attribut label avec pour valeur le nom du groupe à
+afficher.
+
+IV./ Finaliser et envoyer le formulaire
+
+Il ne me reste plus qu'à agrémenter mon formulaire de quelques dernières fonctionnalités (comme la validation),
+puis je pourrai ajouter le bouton d'envoi du formulaire.
+
+1.) Regrouper les champs
+
+Si mon formulaire grossit et comporte beaucoup de champs, il peut être utile de les regrouper au sein de 
+plusieurs balises <fieldset>. Chaque <fieldset> peut contenir une légende avec la balise <legend>. 
+Réf form
+	
+2.) Sélectionner automatiquement un champ
+
+Je peux placer automatiquement le curseur dans l'un des champs de mon formulaire avec l'attribut autofocus.
+Dès que le visiteur chargera la page, le curseur sera placé dans ce champ.
+
+Par exemple, pour que le curseur soit placé dans le champ prénom : 
+
+<input type="text" name="prenom" id="prenom" autofocus />
+
+3.) Rendre un champ obligatoire
+
+Je peux faire en sorte qu'un champ soit obligatoire avec l'attribut required :
+
+<input type="text" name="pseudo" id="pseudo" required />
+
+Le navigateur indiquera alors au visiteur, si le champ est vide au moment de l'envoi, qu'il doit impérativement
+être rempli.
+
+Attention : les anciens navigateurs, qui ne reconnaissent pas cet attribut, enverront le contenu du formulaire
+sans vérification. Pour ces navigateurs, il sera nécessaire de compléter les tests avec, par exemple, des
+scripts JavaScript.
+
+Note : On dispose de pseudo-formats en CSS pour changer le style des éléments requis (:required) et
+invalides (:invalid). Et bien sûr, je dispose aussi du pseudo-format :focus pour changer l'apparence d'un
+champ lorsque le curseur se trouve à l'intérieur.
+
+Exemple :
+
+:required
+{
+	background-color: red;
+}
+
+4.) Le bouton d'envoi
+
+Il ne me reste plus qu'à créer le bouton d'envoi. Là encore, la balise <input /> vient à mon secours. Elle
+existe en quatre versions :
+
+	-	type="submit" : le principal bouton d'envoi du formulaire. C'est celui que j'utiliserai le plus souvent.
+				Le visiteur sera conduit à la page indiquée dans l'attribut action du formulaire.
+	-	type="reset" : remise à zéro du formulaire
+	-	type="image" : équivalent du bouton submit, présenté cette fois sous forme d'image. Il faut rajouter
+			l'attribut src pour indiquer l'URL de l'image
+	-	type="button" : bouton générique, qui n'aura (par défaut) aucun effet. En géréral, ce bouton est géré en
+			JavaScript pour exécuter des actions sur la page. Je ne l'utiliserai pas ici.
+
+Note : on peut changer le texte affiché à l'intérieur des boutons grâce à l'attribut value.
+
+Pour créer un bouton, on écrira par exemple :
+
+<input type="submit" value="Envoyer" />
+
+Lorsque je clique sur le bouton "Envoyer", le formulaire m'amène alors à la page indiquée dans l'attribut
+action.
+
+Le problème, c'est que je ne peux pas créer cette page seuelement en HTML. 
+
+Remarque : type="reset" se comporte parfois comme une zone de saisie apparemment...
+					
+-->
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="style.css" />
+		<title>Formulaires</title>
+	</head>
+	<body>
+	<form method="post" action="traitement.php">
+		<fieldset>
+			<legend>Balises basiques</legend>
+			<p>
+			<label for="pseudo">Your nickname</label> : <input type="text" name="pseudo" id="pseudo" size="30" 
+			maxlength="10" value="Baran" placeholder="Ex:Baran" required />
+			<br />
+			<label for="motdepasse">Your password : </label> <input type="password" name="motdepasse" 
+			id="motdepasse" />
+			<br />
+			<label for="suggest">Comment améliorer ce site ?</label>
+			<br />
+			<textarea name="suggest" id="suggest" rows="8" cols="40" placeholder="Ex:c'est pas bien" >Quoi ?!
+Il est déjà parfait voyons !
+			</textarea>
+			<br />
+			</p>
+		</fieldset>
+		
+		<fieldset>
+			<legend>Balises HTML5</legend>
+			<p>
+			<label for="e-mail">Votre e-mail : </label><input type="email" name="e-mail" id="e-mail" />
+			<br />
+			<label for="adresse">Votre site : </label><input type="url" name="adresse" id="adresse" />
+			<br />
+			<label for="numero">Votre numéro : </label><input type="tel" name="numero" id="numero" autofocus />
+			<br />
+			<label for="nombre">Votre nombre favori : </label><input type="number" name="nombre" id="nombre"
+			min="0" max="1000" step="2" />
+			<br />
+			<label for="slider">Votre température : </label><input type="range" name="slider" id="slider"
+			min="0" max="50" step="1" />
+			<br />
+			<label for="couleur">Votre couleur préférée : </label><input type="color" name="couleur" id="couleur" />
+			<br />
+			<label for="anniv">Votre date de naissance : </label><input type="date" name="anniv" id="anniv" />
+			<br />
+			<label for="heure">Votre heure de naissance : </label><input type="time" name="heure" id="heure" />
+			<br />
+			<label for="cherche">Que cherchez-vous ? : </label><input type="search" name="cherche" id="cherche" />
+			<br />
+			</p>
+		</fieldset>
+		
+		<fieldset>
+			<legend>Les éléments d'options</legend>
+			<p>
+			Cochez les aliments que vous aimez manger : 
+			<br />
+			<input type="checkbox" name="frites" id="frites" /> <label for="frites">Frites</label>
+			<br />
+			<input type="checkbox" name="steak" id="steak" /> <label for="steak">Steak hâché</label>
+			<br />
+			<input type="checkbox" name="pois" id="pois" /> <label for="pois">Petits pois</label>
+			<br />
+			<input type="checkbox" name="kebab" id="kebab" checked /> <label for="kebab">Un bon kébab</label>
+			<br />
+			Veuillez indiquer votre tranche d'âge : <br />
+			<input type="radio" name="age" value="moins15" id="moins15" /> <label for="moins15">Moins de 15 ans</label>
+			<br />
+			<input type="radio" name="age" value="15-25" id="15-25" checked /> <label for="15-25">Entre 15 et 25 ans
+			</label><br />
+			<input type="radio" name="age" value="25-40" id="25-40" /> <label for="25-40">Entre 25 et 40 ans </label>
+			<br />
+			<input type="radio" name="age" value="plus40" id="plus40" /> <label for="plus40">Plus de 40 ans</label>
+			<br />
+			<label for="pays">Dans quel pays habitez-vous</label><br />
+			<select name="pays" id="pays">
+				<optgroup label="Europe">
+					<option value="france">France</option>
+					<option value="spain">Espagne</option>
+					<option value="germany">Allemagne</option>
+					<option value="uk">Royaume-Uni</option>
+				</optgroup>
+				<optgroup label="Asie">
+					<option value="chine">Chine</option>
+					<option value="japon">Japon</option>
+				</optgroup>
+				<optgroup label="Océanie">
+					<option value="Australie" selected>Australie</option>
+				</optgroup>
+				<optgroup label="Amériques">
+					<option value="canada">Canada</option>
+					<option value="mexique">Mexique</option>
+				</optgroup>
+			</select>
+			<br />
+			</p>
+		</fieldset>
+		
+		<p id="bout">
+			<input type="submit" value="Send" />
+		</p>
+	</form>
+	</body>
+</html>
